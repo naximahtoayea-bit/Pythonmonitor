@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* -------------------------------------- */
+        /* สไตล์กล่องข้อความ (Callout / Text Box)  */
+        /* -------------------------------------- */
+        .info-box {
+            background-color: #f8fafc;        /* สีพื้นหลังกล่อง */
+            border-left: 5px solid #0284c7;   /* เส้นขอบหนาด้านซ้าย */
+            border-radius: 6px;              /* ความโค้งของมุม */
+            padding: 15px 20px;               /* ระยะห่างภายในกล่อง */
+            margin-bottom: 20px;              /* ระยะห่างด้านล่างกล่อง */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* เงาบางๆ */
+        }
+        .info-box h3 {
+            margin: 0 0 6px 0;
+            color: #0369a1;                   /* สีหัวข้อ */
+            font-size: 16px;
+        }
+        .info-box p {
+            margin: 0;
+            color: #334155;                   /* สีข้อความ */
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* สไตล์ตาราง */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        tr:nth-child(odd) td {
+            background-color: #f0fdf4; /* สีเขียวอ่อน */
+        }
+        tr:nth-child(even) td {
+            background-color: #f0f9ff; /* สีฟ้าอ่อน */
+        }
+        .profile-crop {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #0284c7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 📦 กล่องข้อความ (Text Box) -->
+    <div class="info-box">
+        <h3>📌 ข้อความ / คำแนะนำ</h3>
+        <p>นาอีมะฮ์ ดตะเย็ง คำอธิบาย หรือหมายเหตุประกอบตาราง</p>
+    </div>
+
+    <!-- ตาราง 5 naemah tohyeng
+      5 แถว -->
+    <table>
+        <thead>
+            <tr style="background-color: #1e293b; color: white;">
+                <th>คอลัมน์ 1</th>
+                <th>คอลัมน์ 2</th>
+                <th>คอลัมน์ 3</th>
+                <th>คอลัมน์ 4</th>
+                <th>คอลัมน์ 5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>naemah 1 - ช่อง 1</td>
+                <td>แถว 1 - ช่อง 2</td>
+                <td>แถว 1 - ช่อง 3</td>
+                <td>แถว 1 - ช่อง 4</td>
+                <td>แถว 1 - ช่อง 5</td>
+            </tr>
+            <tr>
+                <td>แถว 2 - ช่อง 1</td>
+                <td>แถว 2 - ช่อง 2</td>
+                <td>แถว 2 - ช่อง 3</td>
+                <td>แถว 2 - ช่อง 4</td>
+                <td>แถว 2 - ช่อง 5</td>
+            </tr>
+            <tr>
+                <td>แถว 3 - ช่อง 1</td>
+                <td>แถว 3 - ช่อง 2</td>
+                <td>แถว 3 - ช่อง 3</td>
+                <td>แถว 3 - ช่อง 4</td>
+                <td>แถว 3 - ช่อง 5</td>
+            </tr>
+            <tr>
+                <td>แถว 4 - ช่อง 1</td>
+                <td>แถว 4 - ช่อง 2</td>
+                <td>แถว 4 - ช่อง 3</td>
+                <td>แถว 4 - ช่อง 4</td>
+                <td>แถว 4 - ช่อง 5</td>
+            </tr>
+            <tr>
+                <td>แถว 5 - ช่อง 1</td>
+                <td>แถว 5 - ช่อง 2</td>
+                <td>แถว 5 - ช่อง 3</td>
+                <td>
+                    <img class="profile-crop" src="img/sea.webp" alt="รูปโปรไฟล์">
+                </td>
+                <td>แถว 5 - ช่อง 5</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
