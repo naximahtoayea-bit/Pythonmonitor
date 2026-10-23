@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ป่าไม้ภาคใต้ · 6 พาร์ท</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#ffffff; --canvas:#f5faf8; --canvas-2:#eef7f3;
+    --ink:#132a21; --body:#4a6558; --meta:#7d968b;
+    --line:#e0ece6; --line-strong:#c9ddd3;
+    --brand:#14624a; --brand-soft:#1a8f63; --brand-100:#e2f4ec;
+    --gold:#c58a1f; --sky:#1c6a94; --rose:#c2426e; --danger:#b03d2e;
+    --r-lg:20px; --r-md:14px; --r-sm:9px;
+    --sh-sm:0 1px 3px rgba(13,40,30,.05);
+  }
+  html{scroll-behavior:smooth;scroll-padding-top:70px}
+  body{font-family:"Noto Sans Thai","Sarabun",system-ui,-apple-system,sans-serif;
+    background:var(--paper);color:var(--body);line-height:1.78;font-size:16.5px;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+  nav{position:sticky;top:0;z-index:80;background:rgba(255,255,255,.96);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav-in{max-width:1120px;margin:0 auto;padding:10px 22px;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:.92rem;color:var(--ink);white-space:nowrap}
+  .logo .mk{width:31px;height:31px;border-radius:9px;display:grid;place-items:center;
+    background:var(--brand);color:#fff;font-size:.95rem}
+  .navlinks{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
+  .navlinks a{font-size:.76rem;font-weight:700;color:var(--meta);text-decoration:none;
+    padding:6px 10px;border-radius:8px;transition:.15s;white-space:nowrap}
+  .navlinks a:hover{background:var(--brand-100);color:var(--brand)}
+
+  .hero{background:var(--brand);color:#fff;padding:56px 0 60px}
+  .hero .eyebrow{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.16em;
+    text-transform:uppercase;color:#a9e8cd;border:1px solid rgba(169,232,205,.4);
+    padding:6px 14px;border-radius:999px;margin-bottom:16px}
+  .hero h1{font-size:clamp(1.5rem,3.6vw,2.3rem);font-weight:800;color:#fff;
+    line-height:1.28;letter-spacing:-.01em;margin-bottom:12px;max-width:820px}
+  .hero p{font-size:.98rem;color:rgba(255,255,255,.85);max-width:660px}
+  .hero .hstats{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px;
+    padding-top:22px;border-top:1px solid rgba(255,255,255,.2)}
+  .hero .hstat .n{font-size:1.5rem;font-weight:800;color:#fff;line-height:1.1}
+  .hero .hstat .l{font-size:.75rem;color:#a9e8cd;font-weight:600}
+
+  .part{padding:52px 0}
+  .part.alt{background:var(--canvas)}
+  .phead{margin-bottom:26px}
+  .phead .ptag{display:inline-flex;align-items:center;gap:9px;font-size:.7rem;font-weight:800;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--brand-soft);margin-bottom:9px}
+  .phead .ptag .pn{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;
+    background:var(--brand);color:#fff;font-size:.75rem;letter-spacing:0}
+  .phead h2{font-size:clamp(1.25rem,2.6vw,1.7rem);font-weight:800;color:var(--ink);
+    line-height:1.32;letter-spacing:-.01em}
+  .phead .pdesc{font-size:.92rem;color:var(--meta);margin-top:8px;max-width:760px}
+  .phead .prule{height:4px;width:96px;border-radius:4px;background:var(--brand);margin-top:14px}
+
+  .stack{display:flex;flex-direction:column;gap:16px}
+  .stack-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.stack-2{grid-template-columns:1fr}}
+
+  .ibox{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+    padding:22px 24px;box-shadow:var(--sh-sm)}
+  .ibox.pad-sm{padding:16px 20px}
+  .ibox .ihead{display:flex;align-items:flex-start;gap:13px;margin-bottom:14px}
+  .ibox .ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+    font-size:1.15rem;flex:0 0 auto;background:var(--brand-100)}
+  .ibox .ititle{font-size:1.02rem;font-weight:800;color:var(--ink);line-height:1.35}
+  .ibox .isub{font-size:.75rem;font-weight:700;color:var(--meta);margin-top:2px}
+  .ibox p{font-size:.9rem;color:var(--body);margin-bottom:10px}
+  .ibox p:last-child{margin-bottom:0}
+  .ibox strong{color:var(--ink);font-weight:800}
+  .ibox h4{font-size:.9rem;font-weight:800;color:var(--ink);margin:14px 0 7px;
+    display:flex;align-items:center;gap:7px}
+  .ibox h4::before{content:"";width:5px;height:15px;border-radius:3px;background:var(--brand-soft)}
+  .ibox ul,.ibox ol{margin:6px 0 10px 20px;font-size:.89rem}
+  .ibox li{margin-bottom:6px}
+  .ibox code{background:var(--brand-100);color:var(--brand);padding:2px 6px;border-radius:5px;font-size:.85em}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+  .chips span{font-size:.73rem;font-weight:800;padding:5px 11px;border-radius:8px;
+    background:var(--brand-100);color:var(--brand)}
+
+  .dlist{display:grid;gap:2px;margin:10px 0}
+  .drow{display:flex;justify-content:space-between;gap:12px;font-size:.85rem;
+    padding:9px 0;border-bottom:1px dashed var(--line)}
+  .drow:last-child{border-bottom:none}
+  .drow .dk{color:var(--meta);font-weight:600}
+  .drow .dv{color:var(--ink);font-weight:800;text-align:right}
+
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:10px 0}
+  .fact{background:var(--brand-100);border-radius:var(--r-sm);padding:11px 13px}
+  .fact .k{font-size:.68rem;font-weight:800;color:var(--brand);letter-spacing:.03em}
+  .fact .v{font-size:1rem;font-weight:800;color:var(--ink);margin-top:2px}
+
+  .note{border-left:4px solid var(--gold);background:#fdf9ef;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    padding:13px 16px;font-size:.86rem;color:#7a5a13;margin:12px 0}
+  .warn{border-left:4px solid var(--danger);background:#fdf3f1;
+    border-radius:0 var(--r-sm) var(--r-sm) 0;padding:13px 16px;font-size:.86rem;color:#7d3528;margin:12px 0}
+  .warn .wt{font-weight:800;display:flex;align-items:center;gap:7px;margin-bottom:6px;color:var(--danger)}
+  .insight{background:#eef6fb;border-left:4px solid var(--sky);
+    border-radius:0 var(--r-sm) var(--r-sm) 0;padding:13px 16px;font-size:.86rem;color:#1a4d6e;margin:12px 0}
+
+  .ftypes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:6px 0}
+  .ftype{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:#fff;
+    box-shadow:var(--sh-sm);transition:.18s}
+  .ftype:hover{border-color:var(--brand-soft);box-shadow:0 4px 14px rgba(13,40,30,.1)}
+  .ftype .art{height:170px;position:relative;background:var(--canvas-2);overflow:hidden}
+  .ftype .art img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+  .ftype:hover .art img{transform:scale(1.05)}
+  .ftype .art svg{display:block;width:100%;height:100%}
+  .ftype .art .fallback{position:absolute;inset:0;display:none}
+  .ftype .art img.broken{display:none}
+  .ftype .art img.broken + .fallback{display:block}
+  .ftype .art .tagphoto{position:absolute;left:10px;bottom:10px;z-index:2;
+    font-size:.66rem;font-weight:800;color:#fff;background:rgba(13,40,30,.6);
+    padding:3px 9px;border-radius:6px;backdrop-filter:blur(4px)}
+  .ftype .b{padding:13px 15px}
+  .ftype .n{font-size:.9rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:7px}
+  .ftype .d{font-size:.79rem;color:var(--meta);margin-top:4px;line-height:1.65}
+  .ftype .d b{color:var(--body)}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:12px 0}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:14px}
+  .step .sn{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    background:var(--brand);color:#fff;font-size:.76rem;font-weight:800;margin-bottom:9px}
+  .step .st{font-size:.83rem;font-weight:800;color:var(--ink);line-height:1.35}
+  .step .sd{font-size:.75rem;color:var(--meta);margin-top:4px}
+
+  .formula{background:var(--ink);color:#bdf0da;border-radius:var(--r-sm);
+    padding:13px;margin:12px 0;font-family:Consolas,monospace;font-size:.86rem;
+    text-align:center;overflow-x:auto}
+  .formula b{color:#79d6ac}
+
+  .statcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:13px}
+  .sc{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;
+    border-top:4px solid var(--brand)}
+  .sc .k{font-size:.73rem;font-weight:800;color:var(--meta)}
+  .sc .v{font-size:1.5rem;font-weight:800;color:var(--brand);line-height:1.15;margin-top:3px}
+  .sc .s{font-size:.72rem;color:var(--meta);margin-top:2px}
+
+  .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+  .cbox2{height:340px;position:relative}
+  @media(max-width:640px){.cbox2{height:290px}}
+  .legend{list-style:none;margin:12px 0 0}
+  .legend li{display:flex;align-items:center;gap:9px;padding:8px 0;font-size:.85rem;
+    border-bottom:1px dashed var(--line)}
+  .legend li:last-child{border-bottom:none}
+  .legend .dot{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
+  .legend .nm{flex:1;color:var(--body)}
+  .legend .vl{font-weight:800;color:var(--ink)}
+
+  .twrap{overflow:auto;max-height:600px;border-radius:var(--r-md);border:1px solid var(--line)}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff}
+  thead th{position:sticky;top:0;background:var(--brand-100);color:var(--brand);
+    font-size:.73rem;font-weight:800;text-align:left;padding:11px 12px;white-space:nowrap;
+    border-bottom:1px solid var(--line-strong);cursor:pointer;user-select:none}
+  tbody td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--body)}
+  tbody tr:hover{background:var(--canvas)}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--brand)}
+  .nd{text-align:right;font-weight:800;color:#1a7a55}
+  .chip{display:inline-block;font-size:.68rem;font-weight:800;padding:3px 9px;border-radius:7px;
+    background:var(--brand-100);color:var(--brand);white-space:nowrap}
+
+  .mapgrid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+  @media(max-width:880px){.mapgrid{grid-template-columns:1fr}}
+  .mframe{position:relative;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--line);
+    background:var(--canvas-2);height:500px}
+  .mframe iframe{width:100%;height:100%;border:0;display:block}
+  @media(max-width:640px){.mframe{height:380px}}
+
+  .maptop{display:flex;justify-content:space-between;align-items:center;gap:10px;
+    flex-wrap:wrap;margin-bottom:10px}
+  .maptop .seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+  .maptop .seg button{font-family:inherit;font-size:.75rem;font-weight:800;padding:7px 12px;
+    border:0;background:#fff;color:var(--meta);cursor:pointer;transition:.15s}
+  .maptop .seg button.on{background:var(--brand);color:#fff}
+
+  .detail{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+    padding:0;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh-sm)}
+  .detail .dhead{background:var(--brand);color:#fff;padding:16px 18px}
+  .detail .dhead .dname{font-size:1.12rem;font-weight:800;color:#fff}
+  .detail .dhead .dzone{font-size:.75rem;color:#a9e8cd;font-weight:700;margin-top:2px}
+  .detail .dbody{padding:16px 18px;flex:1}
+  .detail .dbody .dlist .drow{padding:8px 0}
+  .detail .dv.big{font-size:1.3rem;color:var(--brand);font-weight:800}
+  .detail .dfoot{padding:12px 18px;border-top:1px solid var(--line);background:var(--canvas);
+    display:flex;gap:8px;flex-wrap:wrap}
+  .dbtn{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:800;
+    padding:9px 14px;border-radius:var(--r-sm);text-decoration:none;cursor:pointer;
+    border:1px solid var(--brand);background:var(--brand);color:#fff;font-family:inherit;transition:.15s}
+  .dbtn:hover{background:var(--brand-soft)}
+  .dbtn.ghost{background:#fff;color:var(--brand)}
+  .dbtn.ghost:hover{background:var(--brand-100)}
+  .dbar{display:flex;height:9px;border-radius:6px;overflow:hidden;background:#eef4f0;margin:4px 0 2px}
+  .dbar span{display:block;height:100%;transition:width .5s}
+
+  .plist{display:grid;gap:6px;max-height:300px;overflow:auto;padding-right:3px;margin-top:10px}
+  .pbtn{display:flex;justify-content:space-between;gap:8px;width:100%;font-family:inherit;
+    font-size:.83rem;font-weight:800;text-align:left;padding:9px 13px;
+    border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;color:var(--ink);
+    cursor:pointer;transition:.15s}
+  .pbtn:hover{border-color:var(--brand-soft);background:var(--canvas)}
+  .pbtn.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .pbtn .p{color:var(--brand);font-size:.77rem}
+  .pbtn.on .p{color:#a9e8cd}
+  .pbtn .swatch{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:8px;flex:0 0 auto}
+
+  .agx{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .ag{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px;
+    box-shadow:var(--sh-sm);border-top:4px solid var(--brand)}
+  .ag .top{display:flex;gap:12px;align-items:center;margin-bottom:11px}
+  .ag .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;
+    font-size:1.15rem;flex:0 0 auto;background:var(--brand-100)}
+  .ag .nm{font-size:.92rem;font-weight:800;color:var(--ink);line-height:1.32}
+  .ag .ab{font-size:.7rem;color:var(--meta);font-weight:700}
+  .ag .role{display:inline-block;font-size:.66rem;font-weight:800;padding:3px 9px;
+    border-radius:6px;background:var(--brand-100);color:var(--brand);margin-bottom:9px}
+  .ag .dsx{font-size:.8rem;color:var(--meta);margin-bottom:11px}
+  .cl{list-style:none;border-top:1px dashed var(--line);padding-top:11px}
+  .cl li{display:flex;gap:8px;font-size:.81rem;padding:5px 0;color:var(--body)}
+  .cl .icn{width:18px;text-align:center;flex:0 0 auto}
+  .cl .lb{color:var(--meta);font-weight:700;min-width:68px;flex:0 0 auto}
+  .cl a{color:var(--brand);font-weight:800;text-decoration:none;word-break:break-all}
+  .cl a:hover{text-decoration:underline}
+
+  .dslist{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:13px}
+  .ds{display:flex;gap:13px;padding:15px;background:#fff;border:1px solid var(--line);
+    border-radius:var(--r-md);text-decoration:none;color:inherit;transition:.15s;box-shadow:var(--sh-sm)}
+  .ds:hover{border-color:var(--brand-soft);transform:translateY(-2px)}
+  .ds .ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+    font-size:1.1rem;flex:0 0 auto;background:var(--brand-100)}
+  .ds .nm{font-size:.88rem;font-weight:800;color:var(--ink);line-height:1.35}
+  .ds .ds2{font-size:.77rem;color:var(--meta);margin-top:2px}
+  .ds .url{font-size:.74rem;color:var(--sky);font-weight:700;margin-top:6px;word-break:break-all}
+
+  .refs{counter-reset:r;list-style:none}
+  .refs li{counter-increment:r;position:relative;padding:13px 12px 13px 50px;
+    border-bottom:1px dashed var(--line);font-size:.85rem;color:var(--body)}
+  .refs li:last-child{border-bottom:none}
+  .refs li::before{content:"[" counter(r) "]";position:absolute;left:9px;top:13px;
+    color:var(--sky);font-weight:800;font-size:.79rem;background:#eef6fb;border-radius:6px;padding:2px 7px}
+  .refs li:target{background:#eef6fb;border-radius:8px}
+  .refs .src{display:block;margin-top:4px;font-size:.76rem}
+  .refs .src a{color:var(--sky);font-weight:700;text-decoration:none;word-break:break-all}
+  .cite{color:var(--sky);font-weight:800;text-decoration:none;font-size:.76em;
+    vertical-align:super;padding:0 1px}
+  .cite:hover{text-decoration:underline}
+
+  .credits{background:var(--brand);color:#fff;border-radius:var(--r-lg);padding:32px 30px;
+    position:relative;overflow:hidden}
+  .credits::after{content:"";position:absolute;right:-60px;bottom:-100px;width:300px;height:300px;
+    border-radius:50%;background:rgba(169,232,205,.12)}
+  .credits .rk{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.12em;
+    text-transform:uppercase;color:#a9e8cd;border:1px solid rgba(169,232,205,.4);
+    padding:6px 14px;border-radius:999px;margin-bottom:15px}
+  .credits h2{font-size:1.2rem;font-weight:800;margin-bottom:20px;color:#fff}
+  .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;position:relative;z-index:1}
+  @media(max-width:700px){.cgrid{grid-template-columns:1fr}}
+  .cbox{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+    border-radius:var(--r-md);padding:19px}
+  .cbox .rl{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:#a9e8cd;margin-bottom:10px}
+  .cbox .nmm{font-size:1.06rem;font-weight:800;margin-bottom:6px}
+  .crow{display:flex;gap:10px;font-size:.85rem;padding:6px 0;
+    border-bottom:1px dashed rgba(255,255,255,.18)}
+  .crow:last-child{border-bottom:none}
+  .crow .k{color:#a9e8cd;min-width:112px;font-weight:700;flex:0 0 auto}
+  .crow a{color:#fff;text-decoration:none;border-bottom:1px dotted rgba(169,232,205,.7)}
+  .crow a:hover{color:#eafff5}
+
+  /* ===== ช่องทางติดต่อผู้จัดทำ ===== */
+  .phoneline{margin-top:18px;padding:18px 22px;border-radius:var(--r-md);
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    background:rgba(255,255,255,.13);border:1px dashed rgba(169,232,205,.5);
+    position:relative;z-index:1}
+  .phoneline .big{font-size:1.9rem;line-height:1}
+  .phoneline .pk{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    color:#a9e8cd;font-weight:800}
+  .phoneline .pv{font-size:1.28rem;font-weight:800;letter-spacing:.02em}
+  .phoneline .pv a{color:#fff;text-decoration:none;border-bottom:2px dotted rgba(169,232,205,.7)}
+  .phoneline .pv a:hover{color:#eafff5}
+  .phoneline .pn{margin-left:auto;font-size:.74rem;color:#bdeedb}
+
+  .cfoot{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.2);
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    font-size:.77rem;color:#bdeedb;position:relative;z-index:1}
+
+  .closing{background:var(--canvas-2);border-left:4px solid var(--gold);
+    border-radius:0 var(--r-md) var(--r-md) 0;padding:16px 20px;font-size:.87rem;color:#7a5a13}
+
+  @media(max-width:600px){
+    .phoneline{padding:16px 18px;gap:12px}
+    .phoneline .big{font-size:1.6rem}
+    .phoneline .pn{margin-left:0;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="logo"><span class="mk">🌿</span> ป่าไม้ภาคใต้</div>
+    <div class="navlinks">
+      <a href="#p1">พาร์ท 1</a><a href="#p2">พาร์ท 2</a>
+      <a href="#p3">พาร์ท 3</a><a href="#p4">พาร์ท 4</a>
+      <a href="#p5">พาร์ท 5</a><a href="#p6">พาร์ท 6</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Thailand · Southern Region · GIS</span>
+    <h1>สัดส่วนพื้นที่ป่าไม้ 14 จังหวัดภาคใต้</h1>
+    <p>รายงานเชิงวิชาการ 6 พาร์ท — ความรู้พื้นฐาน รูปถ่ายป่าไม้ ข้อมูลสถิติ แผนที่จริง และแหล่งข้อมูลอ้างอิง</p>
+    <div class="hstats">
+      <div class="hstat"><div class="n">14</div><div class="l">จังหวัดภาคใต้</div></div>
+      <div class="hstat"><div class="n">24.32%</div><div class="l">พื้นที่ป่าร้อยละ (พ.ศ. 2565)</div></div>
+      <div class="hstat"><div class="n">11.2 ล้านไร่</div><div class="l">พื้นที่ป่ารวมภาคใต้</div></div>
+      <div class="hstat"><div class="n">📷 3</div><div class="l">ภาพถ่ายประเภทป่า</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ PART 1 ══ -->
+<section class="part" id="p1">
+  <div class="wrap">
+    <div class="phead">
+      <div class="ptag"><span class="pn">1</span> Part One · Overview</div>
+      <h2>สถิติป่าไม้และต้นไม้ภาคใต้_</h2>
+      <p class="pdesc">เริ่มจากภาพรวม — ป่าไม้คืออะไร ทำไมภาคใต้จึงสำคัญ และปัจจุบันเหลือป่าเท่าไร</p>
+      <div class="prule"></div>
+    </div>
+
+    <div class="stack">
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">🌳</div>
+          <div><div class="ititle">ป่าไม้คืออะไร และนับอย่างไร</div>
+            <div class="isub">กล่องที่ 1 · ปูพื้นฐาน</div></div>
+        </div>
+        <p><strong>ป่าไม้</strong> ไม่ได้หมายถึงแค่ "ที่มีต้นไม้" แต่เป็นพื้นที่ที่พืชพรรณขึ้นปกคลุมหนาแน่นพอจนกลายเป็นระบบนิเวศที่ทำงานได้จริง โดยต้องเข้าเกณฑ์ 3 ข้อตามนิยามของหน่วยงาน</p>
+        <div class="chips">
+          <span>เรือนยอดปกคลุม</span><span>ความสูงต้นไม้</span><span>ขนาดพื้นที่ขั้นต่ำ</span>
+        </div>
+        <div class="facts">
+          <div class="fact"><div class="k">หน่วยวัดหลัก</div><div class="v">ไร่</div></div>
+          <div class="fact"><div class="k">หน่วยเปรียบเทียบ</div><div class="v">% ต่อจังหวัด</div></div>
+          <div class="fact"><div class="k">หน่วยงานเจ้าของข้อมูล</div><div class="v">กรมป่าไม้</div></div>
+          <div class="fact"><div class="k">วิธีการสำรวจ</div><div class="v">ดาวเทียม + ภาคสนาม</div></div>
+        </div>
+        <p>กรมป่าไม้สำรวจด้วย <strong>ภาพถ่ายดาวเทียมร่วมกับตรวจสอบภาคสนาม</strong> แล้วรายงานผลเป็นไร่และร้อยละต่อพื้นที่จังหวัด <a class="cite" href="#ref1">[1]</a></p>
+        <div class="note"><strong>ข้อควรระวัง:</strong> แต่ละหน่วยงานนิยาม "ป่า" ต่างกัน เช่น กรมป่าไม้นับพืชปกคลุม กรมอุทยานฯ นับเขตป่าอนุรักษ์ กรมทรัพยากรทางทะเลฯ รวมป่าชายเลน — จึงต้องเทียบเฉพาะข้อมูลที่ใช้นิยามเดียวกัน <a class="cite" href="#ref4">[4]</a></div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">💡</div>
+          <div><div class="ititle">ทำไมป่าไม้ภาคใต้จึงสำคัญ</div>
+            <div class="isub">กล่องที่ 2 · เห็นคุณค่า 4 ด้าน</div></div>
+        </div>
+        <div class="stack-2">
+          <div>
+            <h4>🏔️ แหล่งต้นน้ำ</h4>
+            <p>ป่าดิบชื้นบนเทือกเขาตะวันตกเป็นต้นกำเนิดลุ่มน้ำหลายสายที่หล่อเลี้ยงเกษตรกรรมของภาคใต้</p>
+            <h4>🌫️ กักเก็บคาร์บอน</h4>
+            <p>ป่าดิบชื้นและป่าพรุกักคาร์บอนได้สูง — พรุมีชั้นซากพืชสะสมใต้ดินที่กักคาร์บอนระยะยาว</p>
+          </div>
+          <div>
+            <h4>🛡️ กันคลื่นชายฝั่ง</h4>
+            <p>ป่าชายเลนลดแรงคลื่น ลดการกัดเซาะชายฝั่ง และเป็นแหล่งเพาะเลี้ยงสัตว์น้ำตามธรรมชาติ</p>
+            <h4>🐾 ความหลากหลายชีวภาพ</h4>
+            <p>ป่าดิบชื้น ชายเลน พรุ และดิบเขา เป็นที่อยู่อาศัยของพันธุ์พืช-สัตว์เฉพาะถิ่นจำนวนมาก</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">📊</div>
+          <div><div class="ititle">ตัวเลขสำคัญของภาคใต้</div>
+            <div class="isub">จากตารางทางการกรมป่าไม้ ปี พ.ศ. 2565</div></div>
+        </div>
+        <div class="dlist">
+          <div class="drow"><span class="dk">พื้นที่ป่าภาคใต้รวม</span><span class="dv">11,224,484.94 ไร่</span></div>
+          <div class="drow"><span class="dk">คิดเป็นร้อยละของพื้นที่ภาค</span><span class="dv">24.32%</span></div>
+          <div class="drow"><span class="dk">จังหวัดที่มีสัดส่วนป่าสูงสุด</span><span class="dv">ระนอง 53.49%</span></div>
+          <div class="drow"><span class="dk">จังหวัดที่มีสัดส่วนป่าต่ำสุด</span><span class="dv">ปัตตานี 6.08%</span></div>
+          <div class="drow"><span class="dk">ดาวเทียมที่ใช้วิเคราะห์</span><span class="dv">Sentinel-2 · Landsat 8</span></div>
+        </div>
+        <div class="insight"><strong>หมายเหตุ:</strong> ตัวเลขนี้เป็นข้อมูลทางการ ต่างจากค่าสาธิตที่ใช้ในแผนภูมิพาร์ทที่ 3 ซึ่งจัดทำขึ้นเพื่อสาธิตโครงสร้างแดชบอร์ด</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PART 2 ══ -->
+<section class="part alt" id="p2">
+  <div class="wrap">
+    <div class="phead">
+      <div class="ptag"><span class="pn">2</span> Part Two · Knowledge</div>
+      <h2>สถิติป่าไม้ในภาคใต้</h2>
+      <p class="pdesc">เปิดอ่านทีละกล่อง — ประเภทป่า วิธีการสำรวจด้วยดาวเทียม ภัยคุกคาม และแนวทางอนุรักษ์</p>
+      <div class="prule"></div>
+    </div>
+
+    <div class="stack">
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">📷</div>
+          <div><div class="ititle">ประเภทป่าไม้หลักในภาคใต้</div>
+            <div class="isub">กล่องที่ 3 · ภาพถ่ายจริง + คำอธิบาย</div></div>
+        </div>
+
+        <div class="ftypes">
+          <div class="ftype">
+            <div class="art">
+              <img src="img/ป่าดิบชื้น.jpeg" alt="ป่าดิบชื้นในภาคใต้ เรือนยอดหนาแน่นหลายชั้น" width="420" height="170" loading="lazy"
+                   onerror="this.classList.add('broken')">
+              <svg class="fallback" viewBox="0 0 400 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="ป่าดิบชื้น">
+                <defs><linearGradient id="s1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8f2e4"/><stop offset="1" stop-color="#f7fefb"/></linearGradient>
+                <linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14624a"/><stop offset="1" stop-color="#0c2a1f"/></linearGradient></defs>
+                <rect width="400" height="170" fill="url(#s1)"/>
+                <path d="M0 98Q90 72 170 94T400 90V170H0Z" fill="#aae5c8"/>
+                <g fill="#14624a"><path d="M60 124l13-32 13 32Z"/><path d="M80 128l15-38 15 38Z"/>
+                  <path d="M250 116l14-34 14 34Z"/><path d="M272 120l16-38 16 38Z"/></g>
+                <path d="M0 140Q120 120 210 136T400 130V170H0Z" fill="url(#b1)"/>
+              </svg>
+              <span class="tagphoto">📷 ภาพถ่าย</span>
+            </div>
+            <div class="b">
+              <div class="n">🌲 ป่าดิบชื้น</div>
+              <div class="d">ฝนมากกว่า <b>2,000 มม./ปี</b> ไม้ไม่ผลัดใบ หลายชั้นเรือนยอด พบเทือกเขาตะวันตกและใต้ตอนบน</div>
+            </div>
+          </div>
+
+          <div class="ftype">
+            <div class="art">
+              <img src="img/ชายเลน.webp" alt="ป่าชายเลนชายฝั่งภาคใต้ มีรากค้ำเหนือน้ำ" width="420" height="170" loading="lazy"
+                   onerror="this.classList.add('broken')">
+              <svg class="fallback" viewBox="0 0 400 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="ป่าชายเลน">
+                <defs><linearGradient id="s2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9c9"/><stop offset="1" stop-color="#eaf8f1"/></linearGradient>
+                <linearGradient id="w2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fc7d6"/><stop offset="1" stop-color="#2f7f96"/></linearGradient></defs>
+                <rect width="400" height="170" fill="url(#s2)"/>
+                <circle cx="70" cy="42" r="23" fill="#ffd88a" opacity=".9"/>
+                <rect y="92" width="400" height="78" fill="url(#w2)"/>
+                <g fill="#12694a"><circle cx="80" cy="84" r="32"/><circle cx="150" cy="90" r="28"/>
+                  <circle cx="220" cy="82" r="31"/><circle cx="300" cy="88" r="30"/></g>
+                <g stroke="#0b3f2c" stroke-width="5" fill="none" stroke-linecap="round">
+                  <path d="M80 94q-12 17 0 32"/><path d="M80 94q12 17 0 32"/>
+                  <path d="M220 94q-14 17 0 34"/><path d="M220 94q14 17 0 34"/></g>
+              </svg>
+              <span class="tagphoto">📷 ภาพถ่าย</span>
+            </div>
+            <div class="b">
+              <div class="n">🌿 ป่าชายเลน</div>
+              <div class="d">ขึ้นในเขตน้ำขึ้นน้ำลง มีรากพิเศษดักตะกอน ทนน้ำเค็ม — <b>ภาคใต้มีมากที่สุดในประเทศ</b></div>
+            </div>
+          </div>
+
+          <div class="ftype">
+            <div class="art">
+              <img src="img/ป่าพรุ.jpeg" alt="ป่าพรุน้ำสีชา มีซากพืชทับถมและทางเดินไม้" width="420" height="170" loading="lazy"
+                   onerror="this.classList.add('broken')">
+              <svg class="fallback" viewBox="0 0 400 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="ป่าพรุ">
+                <defs><linearGradient id="s3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfeef0"/><stop offset="1" stop-color="#f3f9f5"/></linearGradient>
+                <linearGradient id="b3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a7a5e"/><stop offset="1" stop-color="#4d4230"/></linearGradient></defs>
+                <rect width="400" height="170" fill="url(#s3)"/>
+                <g fill="#2f6b52" opacity=".85"><path d="M40 94l11-34 11 34Z"/><path d="M70 98l12-38 12 38Z"/>
+                  <path d="M300 96l12-36 12 36Z"/><path d="M332 98l13-38 13 38Z"/></g>
+                <g fill="#14624a"><path d="M150 100l14-42 14 42Z"/><path d="M195 104l16-46 16 46Z"/><path d="M245 98l13-40 13 40Z"/></g>
+                <rect y="120" width="400" height="50" fill="url(#b3)"/>
+                <g fill="#fff" opacity=".2"><rect x="0" y="126" width="400" height="4" rx="2"/>
+                  <rect x="40" y="142" width="320" height="3" rx="1.5"/></g>
+              </svg>
+              <span class="tagphoto">📷 ภาพถ่าย</span>
+            </div>
+            <div class="b">
+              <div class="n">💧 ป่าพรุ</div>
+              <div class="d">พื้นที่ชุ่มน้ำ ซากพืชทับถมเป็นชั้นpeat น้ำสีชา — พบมากนราธิวาส-พัทลุง <b>กักคาร์บอนใต้ดินสูง</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">🔍</div>
+          <div><div class="ititle">แยกแยะป่า 3 ชนิดได้อย่างไร</div>
+            <div class="isub">กล่องที่ 3.1 · เทียบเคียงให้เห็นภาพ</div></div>
+        </div>
+        <div class="dlist">
+          <div class="drow"><span class="dk">🌲 ป่าดิบชื้น</span><span class="dv">แผ่นดินสูง · ฝนชุก · ไม่มีน้ำเค็ม</span></div>
+          <div class="drow"><span class="dk">🌿 ป่าชายเลน</span><span class="dv">น้ำขึ้นน้ำลง · น้ำเค็ม · มีรากค้ำ</span></div>
+          <div class="drow"><span class="dk">💧 ป่าพรุ</span><span class="dv">น้ำจืดขัง · ซากพืชหนา · น้ำสีชา</span></div>
+        </div>
+        <div class="insight"><strong>จุดสังเกตเร็ว:</strong> ถ้าโคลนและมีน้ำขึ้นน้ำลงคาดว่าชายเลน ถ้าน้ำนิ่งสีชาและมีทางเดินไม้คาดว่าพรุ นอกนั้นบนเนินเขาสูงคือดิบชื้น</div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">🛰</div>
+          <div><div class="ititle">สำรวจป่าไม้ด้วยดาวเทียม ทำอย่างไร</div>
+            <div class="isub">กล่องที่ 4 · เบื้องหลังตัวเลขทุกตัว</div></div>
+        </div>
+        <p>งาน GIS กับ Remote Sensing ไม่ได้เดาตัวเลข แต่มาจากการประมวลผลภาพถ่ายดาวเทียมเป็นขั้นตอนที่ตรวจสอบได้</p>
+        <div class="steps">
+          <div class="step"><div class="sn">1</div><div class="st">ดึงภาพดาวเทียม</div>
+            <div class="sd">Landsat-8/9 และ Sentinel-2</div></div>
+          <div class="step"><div class="sn">2</div><div class="st">คำนวณ NDVI</div>
+            <div class="sd">ดัชนีความหนาแน่นพืชพรรณ</div></div>
+          <div class="step"><div class="sn">3</div><div class="st">จำแนกการใช้ที่ดิน</div>
+            <div class="sd">Supervised Classification</div></div>
+          <div class="step"><div class="sn">4</div><div class="st">ตรวจความแม่นยำ</div>
+            <div class="sd">Confusion Matrix + Kappa</div></div>
+          <div class="step"><div class="sn">5</div><div class="st">ประเมินคาร์บอน</div>
+            <div class="sd">ค่าสัมประสิทธิ์ต่อไร่</div></div>
+        </div>
+        <h4>สูตรดัชนีพืชพรรณ NDVI</h4>
+        <div class="formula"><b>NDVI</b> = ( NIR − Red ) ÷ ( NIR + Red )</div>
+        <div class="facts">
+          <div class="fact"><div class="k">ช่วงค่าของ NDVI</div><div class="v">0 – 1</div></div>
+          <div class="fact"><div class="k">ความละเอียดภาพ</div><div class="v">10–30 ม.</div></div>
+          <div class="fact"><div class="k">แหล่งดาวน์โหลด</div><div class="v">USGS · Copernicus</div></div>
+        </div>
+        <div class="insight"><strong>ทำไมต้องรู้:</strong> เข้าใจขั้นตอนนี้เพื่อจะอ่านตัวเลขในรายงานได้อย่างมีวิจารณญาณ และรู้ว่าข้อจำกัดอยู่ตรงไหน</div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">⚠️</div>
+          <div><div class="ititle">เข้าใจผิดบ่อย — อย่าเพิ่งเชื่อ</div>
+            <div class="isub">กล่องที่ 5 · กันเข้าใจผิด 3 เรื่อง</div></div>
+        </div>
+        <div class="warn">
+          <div class="wt">🚫 3 เรื่องที่คนมักเข้าใจผิด</div>
+          <ul>
+            <li><strong>NDVI สูง = ป่าแท้</strong> — ไม่จริง! ค่าสูงอาจเป็นยางพารา/ปาล์ม ต้องใช้ LULC ร่วมด้วย <a class="cite" href="#ref8">[8]</a></li>
+            <li><strong>ตัวเลขทุกหน่วยงานตรงกัน</strong> — ไม่จริง! แต่ละที่นิยาม "ป่า" ไม่เหมือนกัน <a class="cite" href="#ref4">[4]</a></li>
+            <li><strong>ข้อมูลเป็น real-time</strong> — ไม่จริง! ปรับปรุงปีละครั้งตามรอบประมวลผล</li>
+          </ul>
+        </div>
+        <div class="note"><strong>เทียบให้เห็นภาพ:</strong> NDVI ก็เหมือน "น้ำหนักตัว" — รู้ว่าหนัก แต่ไม่รู้ว่าเป็นกล้ามเนื้อหรือไขมัน ต้องดูอย่างอื่นประกอบ</div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">🔥</div>
+          <div><div class="ititle">ภัยคุกคามและแนวทางอนุรักษ์</div>
+            <div class="isub">กล่องที่ 6 · ปัญหาและทางออก</div></div>
+        </div>
+        <div class="stack-2">
+          <div>
+            <h4>ภัยคุกคาม 4 ด้าน</h4>
+            <div class="dlist">
+              <div class="drow"><span class="dk">ขยายพื้นที่เกษตร</span><span class="dv" style="color:var(--danger)">รุนแรงสูง</span></div>
+              <div class="drow"><span class="dk">บุกรุกป่าอนุรักษ์</span><span class="dv" style="color:var(--danger)">รุนแรงสูง</span></div>
+              <div class="drow"><span class="dk">ไฟป่าและหมอกควัน</span><span class="dv" style="color:var(--gold)">ปานกลาง</span></div>
+              <div class="drow"><span class="dk">กัดเซาะชายฝั่ง</span><span class="dv" style="color:var(--gold)">ปานกลาง</span></div>
+            </div>
+          </div>
+          <div>
+            <h4>แนวทางอนุรักษ์</h4>
+            <div class="chips">
+              <span>🗺️ คงแผนที่ป่าอนุรักษ์ให้ทันสมัย</span>
+              <span>🌱 ปลูกป่าทดแทนแบบมีส่วนร่วม</span>
+              <span>🌊 คุ้มครองชายเลน/พรุเป็นพิเศษ</span>
+              <span>📡 เฝ้าระวังไฟป่าเชิงรุก</span>
+              <span>💰 คาร์บอนเครดิตสู่ชุมชน</span>
+            </div>
+          </div>
+        </div>
+        <div class="insight"><strong>หัวใจสำคัญ:</strong> ให้ชุมชนที่ดูแลป่าได้ประโยชน์จากป่า — วิธีนี้ยั่งยืนกว่าการห้ามแบบบังคับฝ่ายเดียว</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PART 3 ══ -->
+<section class="part" id="p3">
+  <div class="wrap">
+    <div class="phead">
+      <div class="ptag"><span class="pn">3</span> Part Three · Data</div>
+      <h2>ข้อมูลสถิติและแผนภูมิเปรียบเทียบ</h2>
+      <p class="pdesc">สรุปตัวเลขสำคัญ แผนภูมิรายจังหวัด ตารางสถิติ และแนวโน้มการเปลี่ยนแปลง 10 ปี</p>
+      <div class="prule"></div>
+    </div>
+
+    <div class="stack">
+      <div class="statcards" id="stats"></div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">📈</div>
+          <div><div class="ititle">แนวโน้มพื้นที่ป่าไม้ย้อนหลัง 10 ปี</div>
+            <div class="isub">พ.ศ. 2559 – 2569 (ค่าเชิงสาธิต)</div></div>
+        </div>
+        <div class="grid2">
+          <div class="cbox2"><canvas id="trendChart"></canvas></div>
+          <div>
+            <div class="dlist">
+              <div class="drow"><span class="dk">พ.ศ. 2559</span><span class="dv">13,006,000 ไร่</span></div>
+              <div class="drow"><span class="dk">พ.ศ. 2564</span><span class="dv">12,922,000 ไร่</span></div>
+              <div class="drow"><span class="dk">พ.ศ. 2569</span><span class="dv">12,866,000 ไร่</span></div>
+              <div class="drow"><span class="dk">ลดลงรวม 10 ปี</span><span class="dv" style="color:var(--danger)">140,000 ไร่</span></div>
+              <div class="drow"><span class="dk">อัตราเฉลี่ย/ปี</span><span class="dv" style="color:var(--danger)">14,000 ไร่</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">📊</div>
+          <div><div class="ititle">เปรียบเทียบร้อยละพื้นที่ป่าไม้รายจังหวัด</div>
+            <div class="isub">เรียงจากมากไปน้อย · คลิกแท่งเพื่อดูบนแผนที่ (พาร์ท 4)</div></div>
+        </div>
+        <div class="cbox2"><canvas id="bar"></canvas></div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">🌳</div>
+          <div><div class="ititle">สัดส่วนประเภทป่าไม้ภาคใต้</div>
+            <div class="isub">โครงสร้างประเภทป่าหลัก</div></div>
+        </div>
+        <div class="grid2">
+          <div class="cbox2" style="height:260px"><canvas id="donut"></canvas></div>
+          <ul class="legend" id="legend"></ul>
+        </div>
+      </div>
+
+      <div class="ibox" style="padding:0;overflow:hidden">
+        <div style="padding:20px 22px 12px">
+          <div class="ihead" style="margin-bottom:0">
+            <div class="ico">📋</div>
+            <div><div class="ititle">ตารางสถิติรายจังหวัด</div>
+              <div class="isub">คลิกหัวตารางเพื่อจัดเรียง · คลิกชื่อจังหวัดเพื่อดูบนแผนที่</div></div>
+          </div>
+        </div>
+        <div class="twrap" style="border:none;border-radius:0;max-height:560px">
+          <table>
+            <thead>
+              <tr>
+                <th data-k="name">จังหวัด</th><th data-k="zone">กลุ่มพื้นที่</th>
+                <th data-k="rai" style="text-align:right">พื้นที่ป่า (ไร่)</th>
+                <th data-k="pct" style="text-align:right">ร้อยละ (%)</th>
+                <th data-k="ndvi" style="text-align:right">NDVI</th>
+                <th data-k="carbon" style="text-align:right">คาร์บอน (MT)</th>
+                <th>ประเภทป่าหลัก</th><th>อ้างอิง</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PART 4 ══ -->
+<section class="part alt" id="p4">
+  <div class="wrap">
+    <div class="phead">
+      <div class="ptag"><span class="pn">4</span> Part Four · Web GIS</div>
+      <h2>แผนที่จริง 14 จังหวัด — ฝัง Google Maps โดยตรง</h2>
+      <p class="pdesc">คลิกจังหวัดในรายการ → แผนที่จริงโหลดไปยังพิกัดจังหวัดนั้นพร้อมหมุดทันที (ไม่ต้องใช้ API Key)</p>
+      <div class="prule"></div>
+    </div>
+
+    <div class="stack">
+      <div class="ibox" style="padding:18px 20px">
+        <div class="maptop">
+          <div style="display:flex;align-items:center;gap:11px">
+            <div class="ico" style="width:34px;height:34px;font-size:1rem">🗺️</div>
+            <div>
+              <div style="font-size:.93rem;font-weight:800;color:var(--ink)">Google Maps ฝังจริง — เลือกจังหวัดเพื่อเลื่อนแผนที่</div>
+              <div style="font-size:.75rem;color:var(--meta)">ใช้รูปแบบ <code>maps.google.com/maps?q=lat,lng&amp;output=embed</code> ที่ไม่ต้องใช้คีย์</div>
+            </div>
+          </div>
+          <div class="seg" id="viewSeg">
+            <button data-v="map" class="on">แผนที่</button>
+            <button data-v="sat">ดาวเทียม</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mapgrid">
+        <div>
+          <div class="mframe">
+            <iframe id="gmapFrame" title="แผนที่จังหวัดภาคใต้" allowfullscreen
+              loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+              src="https://maps.google.com/maps?q=9.9529,98.6085&hl=th&z=9&output=embed"></iframe>
+          </div>
+          <div class="ibox pad-sm" style="margin-top:12px;display:flex;justify-content:space-between;
+            align-items:center;gap:12px;flex-wrap:wrap">
+            <span style="font-size:.85rem;color:var(--meta)" id="mapCap">กำลังแสดง: <b style="color:var(--ink)">จังหวัดระนอง</b></span>
+            <button class="dbtn ghost" id="openG">🔗 เปิดใน Google Maps</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="detail" id="detail">
+            <div class="dhead">
+              <div class="dname" id="dName">จังหวัดระนอง</div>
+              <div class="dzone" id="dZone">กลุ่มพื้นที่: อันดามัน</div>
+            </div>
+            <div class="dbody">
+              <div style="font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+                color:var(--brand-soft);margin-bottom:2px">สัดส่วนพื้นที่ป่าไม้</div>
+              <div class="dv big" id="dPct">67.12%</div>
+              <div class="dbar" id="dBar"><span style="width:67%;background:var(--brand)"></span></div>
+              <div class="dlist" style="margin-top:12px">
+                <div class="drow"><span class="dk">พื้นที่ป่าไม้</span><span class="dv" id="dRai">—</span></div>
+                <div class="drow"><span class="dk">ดัชนี NDVI</span><span class="dv" id="dNdvi">—</span></div>
+                <div class="drow"><span class="dk">คาร์บอนกักเก็บ</span><span class="dv" id="dCarbon">—</span></div>
+                <div class="drow"><span class="dk">กลุ่มพื้นที่</span><span class="dv" id="dGroup">—</span></div>
+              </div>
+              <div style="margin-top:10px"><span class="chip" id="dType">—</span></div>
+            </div>
+            <div class="dfoot">
+              <button class="dbtn" id="btnGo">📍 ซูมไปจังหวัดนี้</button>
+              <a class="dbtn ghost" href="#p3">📊 ดูในตาราง</a>
+            </div>
+          </div>
+
+          <div class="ibox" style="padding:16px;margin-top:16px">
+            <strong style="font-size:.85rem;color:var(--ink);display:block;margin-bottom:4px">เลือกจังหวัด (14)</strong>
+            <div class="plist" id="plist"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight">
+        <strong>วิธีอ่าน:</strong> แผนที่ด้านซ้ายเป็น Google Maps จริง — เลือกจังหวัดจากรายการด้านขวาแล้วแผนที่จะเลื่อนไปยังพิกัดนั้นพร้อมหมุด
+        หมุดในรายการมี <b>สีตามระดับสัดส่วนป่าไม้</b> — เขียวเข้ม (สูง ≥50%) · เขียว (34–49%) · เหลือง (10–33%) · ชมพู (ต่ำ &lt;10%)
+      </div>
+      <div class="note"><strong>อยากเห็น 14 หมุดพร้อมกัน?</strong> สร้างแผนที่กำหนดเองด้วย <b>Google My Maps</b> นำเข้าข้อมูลจากสเปรดชีต แล้วนำโค้ดฝังมาใส่แทน iframe นี้ <a class="cite" href="#ref11">[11]</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PART 5 (SOURCES) ══ -->
+<section class="part" id="p5">
+  <div class="wrap">
+    <div class="phead">
+      <div class="ptag"><span class="pn">5</span> Part Five · Sources</div>
+      <h2>แหล่งข้อมูลและหน่วยงานที่เกี่ยวข้อง</h2>
+      <p class="pdesc">ลิงก์แหล่งข้อมูลทางการสำหรับดึงสถิติป่าไม้ ภาพถ่ายดาวเทียม และช่องทางติดต่อหน่วยงาน</p>
+      <div class="prule"></div>
+    </div>
+
+    <div class="stack">
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">🔗</div>
+          <div><div class="ititle">แหล่งข้อมูลสถิติพื้นที่ป่าไม้ประเทศไทย</div>
+            <div class="isub">กลุ่มที่ 1 · กรมป่าไม้และหน่วยงานที่เกี่ยวข้อง</div></div>
+        </div>
+        <div class="dslist">
+          <a class="ds" href="https://forestinfo.forest.go.th" target="_blank" rel="noopener">
+            <div class="ico">🌲</div><div>
+              <div class="nm">ระบบสารสนเทศศูนย์ข้อมูลป่าไม้</div>
+              <div class="ds2">สถิติพื้นที่ป่าไม้รายจังหวัดทั่วประเทศ รวม 14 จังหวัดภาคใต้</div>
+              <div class="url">https://forestinfo.forest.go.th</div></div>
+          </a>
+          <a class="ds" href="https://data.forest.go.th" target="_blank" rel="noopener">
+            <div class="ico">📊</div><div>
+              <div class="nm">RFD Data Catalog</div>
+              <div class="ds2">ชุดข้อมูลพื้นที่ป่าไม้รายจังหวัด พ.ศ. 2567 ดาวน์โหลด XLSX/CSV/PDF</div>
+              <div class="url">https://data.forest.go.th</div></div>
+          </a>
+          <a class="ds" href="https://www.seub.or.th/bloging/work/2025-85/" target="_blank" rel="noopener">
+            <div class="ico">📗</div><div>
+              <div class="nm">รายงานสถานการณ์ป่าไม้รายปี</div>
+              <div class="ds2">มูลนิธิสืบนาคะเสถียร ร่วมกับข้อมูลกรมป่าไม้</div>
+              <div class="url">https://www.seub.or.th</div></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">🛰</div>
+          <div><div class="ititle">แหล่งข้อมูลดาวเทียมและดัชนีพืชพรรณ</div>
+            <div class="isub">กลุ่มที่ 2 · NDVI และ LULC</div></div>
+        </div>
+        <div class="dslist">
+          <a class="ds" href="https://earthengine.google.com" target="_blank" rel="noopener">
+            <div class="ico">🛰</div><div>
+              <div class="nm">Google Earth Engine (GEE)</div>
+              <div class="ds2">แพลตฟอร์มวิเคราะห์ Landsat-8/9 และ Sentinel-2 สำหรับ NDVI และคาร์บอน</div>
+              <div class="url">https://earthengine.google.com</div></div>
+          </a>
+          <a class="ds" href="https://dataspace.copernicus.eu" target="_blank" rel="noopener">
+            <div class="ico">🌍</div><div>
+              <div class="nm">Copernicus Data Space</div>
+              <div class="ds2">ดาวน์โหลด Sentinel-2 ความละเอียด 10 ม.</div>
+              <div class="url">https://dataspace.copernicus.eu</div></div>
+          </a>
+          <a class="ds" href="https://earthexplorer.usgs.gov" target="_blank" rel="noopener">
+            <div class="ico">🛰</div><div>
+              <div class="nm">USGS EarthExplorer</div>
+              <div class="ds2">ดาวน์โหลด Landsat 8/9 สำหรับวิเคราะห์การเปลี่ยนแปลงระยะยาว</div>
+              <div class="url">https://earthexplorer.usgs.gov</div></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">🗺️</div>
+          <div><div class="ititle">เครื่องมือทำแผนที่และ Embed</div>
+            <div class="isub">กลุ่มที่ 3 · GIS Tools</div></div>
+        </div>
+        <div class="dslist">
+          <a class="ds" href="https://www.google.com/maps" target="_blank" rel="noopener">
+            <div class="ico">🗺️</div><div>
+              <div class="nm">Google Maps (ฝัง)</div>
+              <div class="ds2">ฝังแผนที่จริงด้วย iframe รูปแบบ ?q=lat,lng&amp;output=embed — ไม่ต้องใช้คีย์</div>
+              <div class="url">https://www.google.com/maps</div></div>
+          </a>
+          <a class="ds" href="https://www.google.com/intl/th/maps/about/mymaps/" target="_blank" rel="noopener">
+            <div class="ico">📌</div><div>
+              <div class="nm">Google My Maps</div>
+              <div class="ds2">สร้างแผนที่กำหนดเอง ปักหมุดหลายจุด แล้วนำโค้ดฝังมาใส่</div>
+              <div class="url">https://www.google.com/maps/about/mymaps</div></div>
+          </a>
+          <a class="ds" href="https://www.gistda.or.th" target="_blank" rel="noopener">
+            <div class="ico">📍</div><div>
+              <div class="nm">GISTDA Portal</div>
+              <div class="ds2">ข้อมูล GIS และระบบภูมิสารสนเทศป่าไม้ไทย</div>
+              <div class="url">https://www.gistda.or.th</div></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">🏛️</div>
+          <div><div class="ititle">หน่วยงานที่เกี่ยวข้อง &amp; ช่องทางติดต่อ</div>
+            <div class="isub">เบอร์โทรและอีเมลที่กดใช้ได้จริง</div></div>
+        </div>
+        <div class="agx" id="agx"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PART 6 (REFERENCES + CREDITS) ══ -->
+<section class="part alt" id="p6">
+  <div class="wrap">
+    <div class="phead">
+      <div class="ptag"><span class="pn">6</span> Part Six · References</div>
+      <h2>อ้างอิงและข้อมูลผู้จัดทำ</h2>
+      <p class="pdesc">รายการอ้างอิงและข้อมูลผู้จัดทำโครงการ</p>
+      <div class="prule"></div>
+    </div>
+
+    <div class="stack">
+      <div class="ibox">
+        <div class="ihead">
+          <div class="ico">📚</div>
+          <div><div class="ititle">รายการอ้างอิง</div>
+            <div class="isub">คลิกเลข [n] ในหน้าเพื่อข้ามไปยังรายการ</div></div>
+        </div>
+        <ol class="refs" id="reflist"></ol>
+      </div>
+
+      <div class="credits">
+        <span class="rk">Project Credits</span>
+        <h2>ข้อมูลผู้จัดทำและอาจารย์ประจำรายวิชา</h2>
+        <div class="cgrid">
+          <div class="cbox">
+            <div class="rl">ผู้จัดทำโครงการ</div>
+            <p class="nmm">นางสาวนาอีมะฮ์ โตะเย็ง</p>
+            <div class="crow"><span class="k">รหัสนักศึกษา</span><span>6820210575</span></div>
+            <div class="crow"><span class="k">คณะ</span><span>คณะมนุษยศาสตร์และสังคมศาสตร์</span></div>
+            <div class="crow"><span class="k">สาขาวิชา</span><span>ภูมิศาสตร์</span></div>
+            <!-- ★ เบอร์โทรในโค้ด (แก้ที่ href="tel:" และข้อความ) -->
+            <div class="crow"><span class="k">เบอร์โทร</span>
+              <span><a href="tel:0812345678">081-234-5678</a></span></div>
+          </div>
+          <div class="cbox">
+            <div class="rl">อาจารย์ประจำรายวิชา</div>
+            <p class="nmm">ผศ. วุฒิพงษ์ แสงมณี</p>
+            <div class="crow"><span class="k">ตำแหน่ง</span><span>ผู้ช่วยศาสตราจารย์</span></div>
+            <div class="crow"><span class="k">สังกัด</span><span>หลักสูตรภูมิศาสตร์ คณะมนุษยศาสตร์และสังคมศาสตร์</span></div>
+            <div class="crow"><span class="k">มหาวิทยาลัย</span><span>มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตปัตตานี</span></div>
+          </div>
+        </div>
+
+        <!-- ★ ช่องทางติดต่อผู้จัดทำ -->
+        <div class="phoneline">
+          <span class="big">☎️</span>
+          <div>
+            <div class="pk">ช่องทางติดต่อผู้จัดทำ</div>
+            <div class="pv"><a href="tel:0812345678">081-234-5678</a></div>
+          </div>
+          <span class="pn">กดที่เบอร์เพื่อโทรจากมือถือ</span>
+        </div>
+
+        <div class="cfoot">
+          <span>📄 โครงงาน: การวิเคราะห์สัดส่วนพื้นที่ป่าไม้ภาคใต้ด้วย GIS &amp; Remote Sensing</span>
+          <span>🗓️ ปีการศึกษา 2568</span>
+        </div>
+      </div>
+
+      <div class="closing">
+        <strong>หมายเหตุ:</strong> ตัวเลขพื้นที่ป่าในแผนภูมิพาร์ทที่ 3 เป็น<em>ค่าเชิงสาธิต</em>เพื่อสาธิตโครงสร้างแดชบอร์ด
+        ส่วนตัวเลขทางการปี พ.ศ. 2565 ระบุพื้นที่ป่าภาคใต้ 11,224,484.94 ไร่ (24.32%) วิเคราะห์จาก Sentinel-2 และ Landsat 8
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ───────── DATA ───────── */
+const PROV = [
+  { name:"ระนอง", zone:"อันดามัน", lat:9.9529, lng:98.6085, rai:1383524, pct:67.12, ndvi:0.81, carbon:20.8, mainType:"ป่าชายเลน & ป่าดิบชื้น" },
+  { name:"พังงา", zone:"อันดามัน", lat:8.4501, lng:98.5256, rai:1478274, pct:56.40, ndvi:0.78, carbon:22.1, mainType:"ป่าชายเลนอ่าวพังงา & ป่าดงดิบ" },
+  { name:"ยะลา", zone:"ชายแดนใต้", lat:6.5411, lng:101.2804, rai:1210430, pct:52.83, ndvi:0.74, carbon:18.9, mainType:"ป่าดงดิบเขา & ป่าเบญจพรรณ" },
+  { name:"กระบี่", zone:"อันดามัน", lat:8.0863, lng:98.9063, rai:1175840, pct:37.06, ndvi:0.66, carbon:16.4, mainType:"ป่าชายเลน & ป่าดิบชื้น" },
+  { name:"สตูล", zone:"อันดามัน", lat:6.6238, lng:100.0674, rai:731020, pct:36.94, ndvi:0.64, carbon:10.3, mainType:"ป่าชายเลน & ป่าดิบชื้น" },
+  { name:"นราธิวาส", zone:"ชายแดนใต้", lat:6.4255, lng:101.8253, rai:1253100, pct:34.90, ndvi:0.69, carbon:17.6, mainType:"ป่าพรุ & ป่าดิบชื้น" },
+  { name:"สุราษฎร์ธานี", zone:"อ่าวไทยตอนบน", lat:9.1382, lng:99.3215, rai:2960930, pct:27.85, ndvi:0.58, carbon:39.7, mainType:"ป่าดิบชื้น & ป่าเบญจพรรณ" },
+  { name:"ตรัง", zone:"อันดามัน", lat:7.5563, lng:99.6114, rai:1074320, pct:19.94, ndvi:0.52, carbon:14.9, mainType:"ป่าดิบชื้น & ป่าชายเลน" },
+  { name:"นครศรีธรรมราช", zone:"อ่าวไทยตอนบน", lat:8.4304, lng:99.9631, rai:1562840, pct:18.36, ndvi:0.50, carbon:21.4, mainType:"ป่าดิบเขา & ป่าดิบชื้น" },
+  { name:"ชุมพร", zone:"อ่าวไทยตอนบน", lat:10.4930, lng:99.1800, rai:1364820, pct:17.86, ndvi:0.49, carbon:18.6, mainType:"ป่าดิบชื้น & ป่าเบญจพรรณ" },
+  { name:"พัทลุง", zone:"อ่าวไทยตอนล่าง", lat:7.6167, lng:100.0833, rai:638410, pct:14.92, ndvi:0.45, carbon:8.4, mainType:"ป่าพรุ & ป่าดิบชื้น" },
+  { name:"สงขลา", zone:"อ่าวไทยตอนล่าง", lat:7.1898, lng:100.5951, rai:1186450, pct:10.47, ndvi:0.38, carbon:15.7, mainType:"ป่าดิบชื้น & ป่าพรุ" },
+  { name:"ภูเก็ต", zone:"อันดามัน", lat:7.8804, lng:98.3923, rai:118900, pct:8.68, ndvi:0.41, carbon:1.6, mainType:"ป่าชายเลน & ป่าดิบชื้น" },
+  { name:"ปัตตานี", zone:"ชายแดนใต้", lat:6.8681, lng:101.2500, rai:152740, pct:6.44, ndvi:0.33, carbon:2.1, mainType:"ป่าดิบชื้น" }
+];
+const TYPES = [
+  { name:"ป่าดงดิบ / ป่าดิบชื้น", pct:62.4, color:"#14624a" },
+  { name:"ป่าชายเลน", pct:28.1, color:"#1a8f63" },
+  { name:"ป่าพรุ", pct:9.5, color:"#d9a441" }
+];
+const TREND = { labels:["พ.ศ. 2559","พ.ศ. 2564","พ.ศ. 2569"], values:[13006000,12922000,12866000] };
+
+const AGENCIES = [
+  { ic:"🌲", nm:"กรมป่าไม้", ab:"Royal Forest Department · RFD", role:"เจ้าของข้อมูลป่าไม้",
+    ds:"สำรวจ จำแนก และเผยแพร่ข้อมูลพื้นที่ป่าไม้รายจังหวัด รวมถึงป่าชายเลนและป่าอนุรักษ์",
+    c:[{i:"🌐",l:"เว็บไซต์",v:"www.forest.go.th",h:"https://www.forest.go.th"},
+       {i:"📊",l:"คลังข้อมูล",v:"data.forest.go.th",h:"https://data.forest.go.th"},
+       {i:"🌲",l:"ศูนย์ข้อมูล",v:"forestinfo.forest.go.th",h:"https://forestinfo.forest.go.th"}]},
+  { ic:"🛰", nm:"สทอภ. (GISTDA)", ab:"Geo-Informatics and Space Technology", role:"ดาวเทียม & NDVI",
+    ds:"ให้บริการภาพถ่ายดาวเทียม การจำแนกการใช้ที่ดิน (LULC) และดัชนีพืชพรรณ (NDVI)",
+    c:[{i:"☎️",l:"Call Center",v:"0 2141 4444",h:"tel:+6621414444"},
+       {i:"☎️",l:"โทรศัพท์",v:"0 2141 4674",h:"tel:+6621414674"},
+       {i:"🌐",l:"เว็บไซต์",v:"www.gistda.or.th",h:"https://www.gistda.or.th"}]},
+  { ic:"🗺️", nm:"Google Maps / My Maps", ab:"Web mapping platform", role:"แผนที่พาร์ทที่ 4",
+    ds:"ฝังแผนที่จริงด้วย iframe ไม่ต้องใช้คีย์ หรือสร้างแผนที่กำหนดเองปักหมุดหลายจุดด้วย My Maps",
+    c:[{i:"🗺️",l:"Google Maps",v:"google.com/maps",h:"https://www.google.com/maps"},
+       {i:"📌",l:"My Maps",v:"google.com/maps/about/mymaps",h:"https://www.google.com/intl/th/maps/about/mymaps/"}]},
+  { ic:"🦌", nm:"กรมอุทยานแห่งชาติ สัตว์ป่า และพันธุ์พืช", ab:"Department of National Parks · DNP", role:"ป่าอนุรักษ์",
+    ds:"ดูแลเขตป่าอนุรักษ์ อุทยานแห่งชาติ และเขตรักษาพันธุ์สัตว์ป่า",
+    c:[{i:"🌐",l:"เว็บไซต์",v:"portal.dnp.go.th",h:"https://portal.dnp.go.th"},
+       {i:"☎️",l:"Call Center",v:"1362",h:"tel:1362"}]},
+  { ic:"🌊", nm:"กรมทรัพยากรทางทะเลและชายฝั่ง", ab:"Department of Marine and Coastal Resources", role:"ป่าชายเลน",
+    ds:"ข้อมูลป่าชายเลน แนวปะการัง และระบบนิเวศชายฝั่ง",
+    c:[{i:"🌐",l:"เว็บไซต์",v:"www.dmcr.go.th",h:"https://www.dmcr.go.th"},
+       {i:"☎️",l:"Call Center",v:"1366",h:"tel:1366"}]},
+  { ic:"📗", nm:"สผ. (ONEP)", ab:"Office of Natural Resources and Environmental Policy", role:"แผนที่ & นโยบาย",
+    ds:"จัดทำแผนที่ป่าไม้ เขตพื้นที่อนุรักษ์ และรายงานสถานการณ์ระดับประเทศ",
+    c:[{i:"🌐",l:"เว็บไซต์",v:"www.onep.go.th",h:"https://www.onep.go.th"}]}
+];
+
+const REFS = [
+  { t:"กรมป่าไม้. (2569). ข้อมูลพื้นที่ป่าไม้ของประเทศไทยรายจังหวัด. กรุงเทพฯ: กรมป่าไม้.", s:"https://www.forest.go.th" },
+  { t:"กรมป่าไม้. (2568). พื้นที่ป่าไม้แยกรายจังหวัด พ.ศ. 2567 — RFD Data Catalog. สืบค้นเมื่อ 20 ตุลาคม 2569.", s:"https://data.forest.go.th" },
+  { t:"สำนักงานพัฒนาเทคโนโลยีอวกาศและภูมิสารสนเทศ. (ม.ป.ป.). รายชื่อองค์การมหาชน ที่ตั้ง และช่องทางติดต่อ. สืบค้นเมื่อ 20 ตุลาคม 2569.", s:"https://thaigovdata.com/en/datasets/po-004" },
+  { t:"กรมอุทยานแห่งชาติ สัตว์ป่า และพันธุ์พืช. (2565). เขตพื้นที่ป่าอนุรักษ์รายจังหวัด. กรุงเทพฯ: อส.", s:"https://portal.dnp.go.th" },
+  { t:"กรมทรัพยากรทางทะเลและชายฝั่ง. (2564). ข้อมูลพื้นที่ป่าชายเลนรายจังหวัดภาคใต้. กรุงเทพฯ: ทช.", s:"https://www.dmcr.go.th" },
+  { t:"สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม. (2563). แผนที่ป่าไม้และเขตพื้นที่อนุรักษ์รายจังหวัด. กรุงเทพฯ: สผ.", s:"https://www.onep.go.th" },
+  { t:"สำนักงานสถิติแห่งชาติ. (ม.ป.ป.). ช่องทางติดต่อหน่วยงาน. สืบค้นเมื่อ 20 ตุลาคม 2569.", s:"https://www.nso.go.th" },
+  { t:"สำนักงานพัฒนาเทคโนโลยีอวกาศและภูมิสารสนเทศ (GISTDA). (2567). การจำแนกการใช้ประโยชน์ที่ดินและดัชนีพืชพรรณจากดาวเทียม Landsat/Sentinel. กรุงเทพฯ: GISTDA.", s:"https://www.gistda.or.th" },
+  { t:"กรมป่าไม้. (2565). ตารางที่ 1–2 พื้นที่ป่าของประเทศไทยและรายจังหวัด พ.ศ. 2556–2565. กรุงเทพฯ: สำนักจัดการที่ดินป่าไม้.", s:"https://forestinfo.forest.go.th/Content/file/stat2565/forest%202565.pdf" },
+  { t:"Google. (2562). รูปภาพใน HTML — web.dev. สืบค้นเมื่อ 21 ตุลาคม 2569.", s:"https://web.dev/learn/html/images?hl=th" },
+  { t:"Google. (2568). ฝังแผนที่ — Maps Embed API. สืบค้นเมื่อ 21 ตุลาคม 2569.", s:"https://developers.google.com/maps/documentation/embed/embedding-map" }
+];
+
+/* ───────── HELPERS ───────── */
+const $ = s => document.querySelector(s);
+const nf = n => n.toLocaleString("th-TH",{maximumFractionDigits:0});
+const nf1 = n => n.toLocaleString("th-TH",{minimumFractionDigits:1,maximumFractionDigits:1});
+const en = n => n.toLocaleString("en-US");
+const cite = ids => ids.map(i=>`<a class="cite" href="#ref${i}">[${i}]</a>`).join("");
+const sorted = [...PROV].sort((a,b)=>b.pct-a.pct);
+const avg = PROV.reduce((s,d)=>s+d.pct,0)/PROV.length;
+const totRai = PROV.reduce((s,d)=>s+d.rai,0);
+const totCar = PROV.reduce((s,d)=>s+d.carbon,0);
+const totTree = Math.round(totRai*96);
+const colorOf = p => p>=50?"#14624a":p>=34?"#1a8f63":p>=10?"#d9a441":"#c2426e";
+
+/* ───────── STATS ───────── */
+$("#stats").innerHTML = `
+  <div class="sc"><div class="k">ค่าเฉลี่ยรายจังหวัด</div><div class="v">${nf1(avg)}%</div><div class="s">จาก 14 จังหวัด</div></div>
+  <div class="sc"><div class="k">จังหวัดสูงสุด</div><div class="v">${sorted[0].pct}%</div><div class="s">${sorted[0].name}</div></div>
+  <div class="sc"><div class="k">จังหวัดต่ำสุด</div><div class="v">${sorted[sorted.length-1].pct}%</div><div class="s">${sorted[sorted.length-1].name}</div></div>
+  <div class="sc"><div class="k">พื้นที่ป่ารวม</div><div class="v">${nf(totRai)}</div><div class="s">ไร่</div></div>
+  <div class="sc"><div class="k">คาร์บอนกักเก็บรวม</div><div class="v">${nf1(totCar)}</div><div class="s">ล้านตัน (MT)</div></div>
+  <div class="sc"><div class="k">ต้นไม้คาดการณ์</div><div class="v">${nf(totTree)}</div><div class="s">ต้น</div></div>`;
+
+/* ───────── CHARTS ───────── */
+const trendGrad = ctx => {
+  const {ctx:c, chartArea} = ctx.chart;
+  if(!chartArea) return "rgba(26,143,99,.15)";
+  const g = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+  g.addColorStop(0,"rgba(26,143,99,.26)"); g.addColorStop(1,"rgba(26,143,99,.02)");
+  return g;
+};
+new Chart($("#trendChart"),{
+  type:"line",
+  data:{ labels:TREND.labels, datasets:[{ label:"พื้นที่ป่าไม้รวม (ไร่)", data:TREND.values,
+    borderColor:"#17a06a", backgroundColor:trendGrad, fill:true, borderWidth:3, tension:0.06,
+    pointRadius:6, pointHoverRadius:9, pointBackgroundColor:"#17a06a",
+    pointBorderColor:"#fff", pointBorderWidth:2 }]},
+  options:{ responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false},
+      tooltip:{ backgroundColor:"#132a21", padding:11, cornerRadius:9, displayColors:false,
+        callbacks:{ label:c=>` ${en(c.parsed.y)} ไร่` }}},
+    scales:{ y:{ min:12860000, max:13020000, grid:{color:"#eaf2ee"}, border:{display:false},
+        ticks:{ color:"#7d968b", font:{size:10.5}, callback:v=>en(v) }},
+      x:{ grid:{display:false}, border:{color:"#e0ece6"}, ticks:{ color:"#7d968b", font:{size:11} }} }}
+});
+new Chart($("#bar"),{
+  type:"bar",
+  data:{ labels:sorted.map(d=>d.name), datasets:[{ data:sorted.map(d=>d.pct),
+    backgroundColor:sorted.map(d=>colorOf(d.pct)), borderRadius:5, borderSkipped:false, maxBarThickness:50 }]},
+  options:{ responsive:true, maintainAspectRatio:false,
+    onClick:(e,els)=>{ if(els.length){ goTo(PROV.find(d=>d.name===sorted[els[0].index].name)); } },
+    plugins:{ legend:{display:false},
+      tooltip:{ backgroundColor:"#132a21", padding:10, cornerRadius:8,
+        callbacks:{ label:c=>` ${c.parsed.y}% · คลิกเพื่อดูบนแผนที่` }}},
+    scales:{ y:{ beginAtZero:true, max:80, grid:{color:"#eaf2ee"}, border:{display:false},
+        ticks:{ color:"#7d968b", font:{size:10.5}, callback:v=>v+"%" }},
+      x:{ grid:{display:false}, border:{color:"#e0ece6"},
+        ticks:{ color:"#7d968b", font:{size:10}, maxRotation:55, minRotation:45 }} }}
+});
+new Chart($("#donut"),{
+  type:"doughnut",
+  data:{ labels:TYPES.map(t=>t.name), datasets:[{ data:TYPES.map(t=>t.pct),
+    backgroundColor:TYPES.map(t=>t.color), borderColor:"#fff", borderWidth:3, hoverOffset:8 }]},
+  options:{ responsive:true, maintainAspectRatio:false, cutout:"62%",
+    plugins:{ legend:{display:false},
+      tooltip:{ backgroundColor:"#132a21", padding:11, cornerRadius:9,
+        callbacks:{ label:c=>` ${c.label}: ${c.parsed}%` }}}}
+});
+$("#legend").innerHTML = TYPES.map(t=>`
+  <li><span class="dot" style="background:${t.color}"></span>
+    <span class="nm">${t.name}</span><span class="vl">${t.pct.toFixed(1)}%</span></li>`).join("");
+
+/* ───────── REAL MAP ───────── */
+let mapView = "map", current = null;
+function buildMapUrl(p){
+  const maptype = mapView==="sat" ? "&t=k" : "";
+  return `https://maps.google.com/maps?q=${p.lat},${p.lng}&hl=th&z=9&output=embed${maptype}`;
+}
+$("#viewSeg").addEventListener("click", e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  mapView=b.dataset.v;
+  document.querySelectorAll("#viewSeg button").forEach(x=>x.classList.toggle("on",x===b));
+  if(current) $("#gmapFrame").src = buildMapUrl(current);
+});
+
+function selectProvince(p){
+  current = p;
+  document.querySelectorAll(".pbtn").forEach(b=>b.classList.toggle("on", b.dataset.n===p.name));
+  $("#dName").textContent = "จังหวัด" + p.name;
+  $("#dZone").textContent = "กลุ่มพื้นที่: " + p.zone;
+  $("#dPct").textContent = p.pct.toFixed(2) + "%";
+  $("#dRai").textContent = nf(p.rai) + " ไร่";
+  $("#dNdvi").textContent = p.ndvi.toFixed(2);
+  $("#dCarbon").textContent = p.carbon + " MT";
+  $("#dGroup").textContent = p.zone;
+  $("#dType").textContent = p.mainType;
+  const bar = $("#dBar span");
+  bar.style.width = Math.min(p.pct,100) + "%";
+  bar.style.background = colorOf(p.pct);
+  $("#mapCap").innerHTML = `กำลังแสดง: <b style="color:var(--ink)">จังหวัด${p.name}</b> · ป่าไม้ ${p.pct.toFixed(2)}%`;
+  $("#btnGo").onclick = () => { document.getElementById("p4").scrollIntoView({behavior:"smooth"}); };
+  $("#openG").onclick = () =>
+    window.open(`https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`,"_blank","noopener");
+}
+function goTo(p){
+  selectProvince(p);
+  $("#gmapFrame").src = buildMapUrl(p);
+  document.getElementById("p4").scrollIntoView({behavior:"smooth", block:"start"});
+}
+$("#plist").innerHTML = sorted.map(d=>`
+  <button class="pbtn" data-n="${d.name}">
+    <span><span class="swatch" style="background:${colorOf(d.pct)}"></span>${d.name}</span>
+    <span class="p">${d.pct.toFixed(2)}%</span></button>`).join("");
+$("#plist").addEventListener("click", e=>{
+  const b=e.target.closest(".pbtn"); if(!b) return;
+  goTo(PROV.find(d=>d.name===b.dataset.n));
+});
+(function(){ const first = sorted[0]; selectProvince(first);
+  $("#gmapFrame").src = buildMapUrl(first); })();
+
+/* ───────── TABLE ───────── */
+let sortKey=null, sortDir=-1;
+function drawTable(){
+  let rows=[...PROV];
+  if(sortKey){ rows.sort((a,b)=>{ const x=a[sortKey], y=b[sortKey];
+    return (typeof x==="string"?x.localeCompare(y,"th"):x-y)*sortDir; }); }
+  $("#tbody").innerHTML = rows.map(d=>`
+    <tr data-name="${d.name}" style="cursor:pointer">
+      <td style="font-weight:800;color:var(--brand)">${d.name}</td><td>${d.zone}</td>
+      <td class="num">${nf(d.rai)}</td><td class="num">${d.pct.toFixed(2)}%</td>
+      <td class="nd">${d.ndvi.toFixed(2)}</td><td class="num">${d.carbon}</td>
+      <td><span class="chip">${d.mainType}</span></td><td>${cite([1,9])}</td></tr>`).join("");
+  document.querySelectorAll("#tbody tr").forEach(tr=>{
+    tr.addEventListener("click",()=>{ goTo(PROV.find(d=>d.name===tr.dataset.name)); });
+  });
+}
+document.querySelectorAll("thead th[data-k]").forEach(th=>{
+  th.addEventListener("click",()=>{ const k=th.dataset.k;
+    sortDir=(sortKey===k)?sortDir*-1:-1; sortKey=k; drawTable(); });
+});
+drawTable();
+
+/* ───────── AGENCIES ───────── */
+$("#agx").innerHTML = AGENCIES.map(a=>`
+  <article class="ag"><div class="top"><div class="ic">${a.ic}</div>
+      <div><div class="nm">${a.nm}</div><div class="ab">${a.ab}</div></div></div>
+    <span class="role">${a.role}</span><p class="dsx">${a.ds}</p>
+    <ul class="cl">${a.c.map(x=>`
+      <li><span class="icn">${x.i}</span><span class="lb">${x.l}</span>
+        <span>${x.h?`<a href="${x.h}" target="_blank" rel="noopener">${x.v}</a>`:x.v}</span></li>`).join("")}</ul>
+  </article>`).join("");
+
+/* ───────── REFS ───────── */
+$("#reflist").innerHTML = REFS.map((r,i)=>`
+  <li id="ref${i+1}">${r.t}<span class="src">🔗 <a href="${r.s}" target="_blank" rel="noopener">${r.s}</a></span></li>`).join("");
+</script>
+</body>
+</html>
